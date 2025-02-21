@@ -1,6 +1,11 @@
-import * as React from "react";
-import { ColorValue, Platform, processColor, requireNativeComponent } from "react-native";
-import { LatLng } from "./types";
+import * as React from 'react';
+import {
+  ColorValue,
+  Platform,
+  processColor,
+  requireNativeComponent,
+} from 'react-native';
+import { LatLng } from './types';
 
 export interface PolylineProps {
   /**
@@ -55,11 +60,14 @@ export default class extends React.PureComponent<PolylineProps> {
   render() {
     const props = {
       ...this.props,
-      ...Platform.select({ android: { colors: this.props.colors.map(processColor) } }),
+      ...Platform.select({
+        android: { colors: this.props.colors.map(processColor) },
+      }),
     };
-    // @ts-ignore
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-expect-error
     return <NativePolyline {...props} />;
   }
 }
 
-const NativePolyline = requireNativeComponent<PolylineProps>("AMapPolyline");
+const NativePolyline = requireNativeComponent<PolylineProps>('AMapPolyline');

@@ -1,10 +1,16 @@
-import * as React from "react";
-import { ImageSourcePropType, NativeSyntheticEvent, requireNativeComponent } from "react-native";
-// @ts-ignore
-import resolveAssetSource from "react-native/Libraries/Image/resolveAssetSource";
-import { LatLng } from "./types";
+import * as React from 'react';
+import {
+  ImageSourcePropType,
+  NativeSyntheticEvent,
+  requireNativeComponent,
+} from 'react-native';
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-expect-error
+import resolveAssetSource from 'react-native/Libraries/Image/resolveAssetSource';
+import { LatLng } from './types';
 
-const NativeMultiPoint = requireNativeComponent<MultiPointProps>("AMapMultiPoint");
+const NativeMultiPoint =
+  requireNativeComponent<MultiPointProps>('AMapMultiPoint');
 
 export interface MultiPointProps {
   /**

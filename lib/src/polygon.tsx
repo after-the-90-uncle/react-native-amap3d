@@ -1,5 +1,5 @@
-import { requireNativeComponent } from "react-native";
-import { LatLng } from "./types";
+import { requireNativeComponent } from 'react-native';
+import { LatLng } from './types';
 
 export interface Polygon {
   /**
@@ -28,4 +28,4 @@ export interface Polygon {
   zIndex?: number;
 }
 
-export default requireNativeComponent<Polygon>("AMapPolygon");
+export default requireNativeComponent<Polygon>('AMapPolygon');

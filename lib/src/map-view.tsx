@@ -1,12 +1,19 @@
-import * as React from "react";
+import * as React from 'react';
 import {
   NativeMethods,
   NativeSyntheticEvent,
   requireNativeComponent,
   ViewProps,
-} from "react-native";
-import Component from "./component";
-import { CameraPosition, LatLng, LatLngBounds, MapPoi, MapType, Point } from "./types";
+} from 'react-native';
+import Component from './component';
+import {
+  CameraPosition,
+  LatLng,
+  LatLngBounds,
+  MapPoi,
+  MapType,
+  Point,
+} from './types';
 
 export interface CameraEvent {
   cameraPosition: CameraPosition;
@@ -150,10 +157,12 @@ export interface MapViewProps extends ViewProps {
   /**
    * 地图定位更新事件
    */
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  //@ts-expect-error
   onLocation?: (event: NativeSyntheticEvent<GeolocationPosition>) => void;
 }
 
-const name = "AMapView";
+const name = 'AMapView';
 const NativeMapView = requireNativeComponent<MapViewProps>(name);
 
 export default class extends Component<MapViewProps> {
@@ -167,31 +176,34 @@ export default class extends Component<MapViewProps> {
   name = name;
   ref?: (React.Component<MapViewProps> & NativeMethods) | null;
   state = { loaded: false };
-  callbackMap: { [key: number]: (data: any) => void } = {};
+  callbackMap: { [key: number]: (data: dgAny) => void } = {};
 
   /**
    * 移动视角
    */
   moveCamera(cameraPosition: CameraPosition, duration = 0) {
-    this.invoke("moveCamera", [cameraPosition, duration]);
+    this.invoke('moveCamera', [cameraPosition, duration]);
   }
 
   /**
    * 点坐标转地理坐标，主要用于地图选点
    */
   getLatLng(point: Point): Promise<LatLng> {
-    return this.call("getLatLng", point);
+    return this.call('getLatLng', point);
   }
 
-  callback = ({ nativeEvent }: NativeSyntheticEvent<{ id: number; data: any }>) => {
+  callback = ({
+    nativeEvent,
+  }: NativeSyntheticEvent<{ id: number; data: dgAny }>) => {
     this.callbackMap[nativeEvent.id]?.call(this, nativeEvent.data);
     delete this.callbackMap[nativeEvent.id];
   };
 
-  call(name: string, args: any): Promise<any> {
+  // eslint-disable-next-line @typescript-eslint/no-shadow
+  call(name: string, args: dgAny): Promise<dgAny> {
     const id = Math.random();
-    this.invoke("call", [id, name, args]);
-    return new Promise((resolve) => (this.callbackMap[id] = resolve));
+    this.invoke('call', [id, name, args]);
+    return new Promise(resolve => (this.callbackMap[id] = resolve));
   }
 
   componentDidMount() {
@@ -202,6 +214,7 @@ export default class extends Component<MapViewProps> {
   }
 
   render() {
+    // eslint-disable-next-line prefer-const
     let { style, onLoad } = this.props;
     if (!this.state.loaded) {
       style = [style, { width: 1, height: 1 }];
@@ -209,16 +222,16 @@ export default class extends Component<MapViewProps> {
     return (
       <NativeMapView
         {...this.props}
-        ref={(ref) => (this.ref = ref)}
+        ref={ref => (this.ref = ref)}
         style={style}
-        // @ts-ignore: 内部接口
+        // @ts-expect-error: 内部接口
         onCallback={this.callback}
-        onPress={(event) => {
+        onPress={event => {
           if (event.nativeEvent.latitude) {
             this.props.onPress?.call(this, event);
           }
         }}
-        onLoad={(event) => {
+        onLoad={event => {
           // android 地图部分控件不显示的问题在重新 layout 之后会恢复正常。
           // 同时也能修复 ios 地图偶尔出现的 layout 异常
           this.setState({ loaded: true });

@@ -1,11 +1,11 @@
-import { PureComponent } from "react";
-import { findNodeHandle, UIManager } from "react-native";
+import { PureComponent } from 'react';
+import { findNodeHandle, UIManager } from 'react-native';
 
-export default class Component<P, S = {}> extends PureComponent<P, S> {
+export default class Component<P, S = object> extends PureComponent<P, S> {
   /**
    * 原生 View 名称，继承时必须指定
    */
-  name = "";
+  name = '';
   mounted = false;
 
   componentDidMount() {
@@ -19,7 +19,7 @@ export default class Component<P, S = {}> extends PureComponent<P, S> {
   /**
    * 调用原生方法
    */
-  invoke(name: string, params?: any[]) {
+  invoke(name: string, params?: dgAny[]) {
     if (!this.mounted) return;
 
     const handle = findNodeHandle(this);

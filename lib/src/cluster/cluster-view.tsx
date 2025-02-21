@@ -1,7 +1,7 @@
-import * as React from "react";
-import { StyleSheet, Text, View, ViewStyle } from "react-native";
-import { ClusterParams } from ".";
-import Marker from "../marker";
+import * as React from 'react';
+import { StyleSheet, Text, View, ViewStyle } from 'react-native';
+import { ClusterParams } from '.';
+import Marker from '../marker';
 
 interface Props {
   cluster: ClusterParams;
@@ -38,10 +38,10 @@ export default class ClusterView extends React.PureComponent<Props> {
 const style = StyleSheet.create({
   cluster: {
     borderWidth: 4,
-    borderColor: "#fff",
-    backgroundColor: "rgba(245,83,61,0.9)",
-    alignItems: "center",
-    justifyContent: "center",
+    borderColor: '#fff',
+    backgroundColor: 'rgba(245,83,61,0.9)',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
-  text: { color: "#fff", fontWeight: "600" },
+  text: { color: '#fff', fontWeight: '600' },
 });

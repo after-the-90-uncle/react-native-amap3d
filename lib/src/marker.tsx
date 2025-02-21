@@ -1,15 +1,16 @@
-import * as React from "react";
+import * as React from 'react';
 import {
   ImageSourcePropType,
   NativeSyntheticEvent,
   requireNativeComponent,
   View,
   ViewStyle,
-} from "react-native";
-// @ts-ignore
-import resolveAssetSource from "react-native/Libraries/Image/resolveAssetSource";
-import Component from "./component";
-import { LatLng, Point } from "./types";
+} from 'react-native';
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-expect-error
+import resolveAssetSource from 'react-native/Libraries/Image/resolveAssetSource';
+import Component from './component';
+import { LatLng, Point } from './types';
 
 export interface MarkerProps {
   /**
@@ -98,7 +99,7 @@ export default class extends Component<MarkerProps> {
    * icon 更新。
    */
   update = () => {
-    setTimeout(() => this.invoke("update"), 0);
+    setTimeout(() => this.invoke('update'), 0);
   };
 
   componentDidUpdate() {
@@ -109,8 +110,8 @@ export default class extends Component<MarkerProps> {
 
   render() {
     const props = { ...this.props };
-    Reflect.set(props, "latLng", props.position);
-    // @ts-ignore android 不能用 position 作为属性，会发生冲突，也是个蛋疼的问题
+    Reflect.set(props, 'latLng', props.position);
+    // @ts-expect-error android 不能用 position 作为属性，会发生冲突，也是个蛋疼的问题
     delete props.position;
     if (props.children) {
       props.children = (
@@ -123,6 +124,6 @@ export default class extends Component<MarkerProps> {
   }
 }
 
-const name = "AMapMarker";
-const style: ViewStyle = { position: "absolute", zIndex: -1 };
+const name = 'AMapMarker';
+const style: ViewStyle = { position: 'absolute', zIndex: -1 };
 const NativeMarker = requireNativeComponent<MarkerProps>(name);

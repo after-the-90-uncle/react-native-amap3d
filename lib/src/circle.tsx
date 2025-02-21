@@ -1,5 +1,5 @@
-import { requireNativeComponent } from "react-native";
-import { LatLng } from "./types";
+import { requireNativeComponent } from 'react-native';
+import { LatLng } from './types';
 
 export interface CircleProps {
   /**
@@ -33,4 +33,4 @@ export interface CircleProps {
   zIndex?: number;
 }
 
-export default requireNativeComponent<CircleProps>("AMapCircle");
+export default requireNativeComponent<CircleProps>('AMapCircle');

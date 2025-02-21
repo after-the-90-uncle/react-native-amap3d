@@ -1,9 +1,11 @@
-import * as React from "react";
-import { ViewStyle } from "react-native";
-import Supercluster, { ClusterFeature, ClusterProperties } from "supercluster";
-import { CameraEvent } from "../map-view";
-import { LatLng } from "../types";
-import ClusterView from "./cluster-view";
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+//@ts-nocheck
+import * as React from 'react';
+import { ViewStyle } from 'react-native';
+import Supercluster, { ClusterFeature, ClusterProperties } from 'supercluster';
+import { CameraEvent } from '../map-view';
+import { LatLng } from '../types';
+import ClusterView from './cluster-view';
 
 export interface ClusterParams {
   /**
@@ -31,7 +33,7 @@ interface ClusterPoint {
   /**
    * 携带的数据，可以是任意类型
    */
-  properties?: any;
+  properties?: dgAny;
 }
 
 interface Props {
@@ -63,7 +65,7 @@ interface Props {
   /**
    * 渲染聚合点
    */
-  renderCluster?: (params: ClusterParams) => React.ComponentType<any>;
+  renderCluster?: (params: ClusterParams) => React.ComponentType<dgAny>;
 
   /**
    * 聚合点点击事件
@@ -79,7 +81,7 @@ export default class Cluster extends React.PureComponent<Props, State> {
   static defaultProps = { radius: 200 };
   state: State = { clusters: [] };
   status?: CameraEvent;
-  cluster?: Supercluster<any, ClusterProperties>;
+  cluster?: Supercluster<dgAny, ClusterProperties>;
 
   componentDidMount() {
     this.init();
@@ -95,17 +97,17 @@ export default class Cluster extends React.PureComponent<Props, State> {
     const { radius, points } = this.props;
     // 如果主线程占用太多计算资源，会导致 ios onLoad 事件无法触发，非常蛋疼
     // 暂时想到的解决办法是等一个事件循环
-    await new Promise((resolve) => setTimeout(resolve, 0));
+    await new Promise(resolve => setTimeout(resolve, 0));
     const options = { radius, minZoom: 3, maxZoom: 21 };
-    this.cluster = new Supercluster<any, ClusterProperties>(options).load(
-      points.map((marker) => ({
-        type: "Feature",
+    this.cluster = new Supercluster<dgAny, ClusterProperties>(options).load(
+      points.map(marker => ({
+        type: 'Feature',
         geometry: {
-          type: "Point",
+          type: 'Point',
           coordinates: [marker.position.longitude, marker.position.latitude],
         },
         properties: marker.properties,
-      }))
+      })),
     );
     if (this.status) {
       this.update(this.status);
@@ -117,12 +119,17 @@ export default class Cluster extends React.PureComponent<Props, State> {
    */
   async update(status: CameraEvent) {
     this.status = status;
-    await new Promise((resolve) => setTimeout(resolve, 0));
+    await new Promise(resolve => setTimeout(resolve, 0));
     const { cameraPosition, latLngBounds } = status;
     const { southwest, northeast } = latLngBounds;
     const clusters = this.cluster!.getClusters(
-      [southwest.longitude, southwest.latitude, northeast.longitude, northeast.latitude],
-      Math.round(cameraPosition.zoom!)
+      [
+        southwest.longitude,
+        southwest.latitude,
+        northeast.longitude,
+        northeast.latitude,
+      ],
+      Math.round(cameraPosition.zoom!),
     );
     this.setState({ clusters });
   }
